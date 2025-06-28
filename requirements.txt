@@ -1,0 +1,7 @@
+streamlit
+python-dotenv==1.0.0
+numpy==1.26.4
+pandas==2.2.2
+llama-index
+llama-index-llms-openai
+llama-index-embeddings-openai

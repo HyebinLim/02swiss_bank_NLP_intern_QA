@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+
+# 환경 변수
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+prototype.ipynb
