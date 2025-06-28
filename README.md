@@ -1,4 +1,4 @@
-#🏦 Swiss Bank AI/NLP scientist Q&A App
+# 🏦 Swiss Bank AI/NLP scientist Q&A App
 
 스위스 취업 준비 경험을 담은 블로그 PDF를 기반으로,
 질문에 답변해주는 Q&A 챗봇입니다🤖
