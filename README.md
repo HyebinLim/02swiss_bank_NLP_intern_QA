@@ -9,9 +9,21 @@
 - 답변의 출처 페이지를 표시하여 직접 데이터소스를 확인해보실 수 있습니다.
 
 ## 실행 방법
-   ```bash
-   streamlit run streamlit_app.py
-   ```
+
+### 로컬 실행
+```bash
+streamlit run streamlit_app.py
+```
+
+### 웹에서 사용하기
+1. **Streamlit Cloud 배포** (추천)
+   - [share.streamlit.io](https://share.streamlit.io)에서 배포
+   - GitHub 저장소 연결 후 자동 배포
+   - 웹 링크로 바로 접근 가능
+
+2. **로컬 실행**
+   - 위 명령어로 실행 후 `http://localhost:8501` 접속
+
 streamlit web에서 OpenAI API 키 입력 후 질문!
 
 ## 환경 변수
