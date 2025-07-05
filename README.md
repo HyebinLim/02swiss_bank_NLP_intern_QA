@@ -11,7 +11,7 @@
 ## 🚀 사용하기
 
 ### 웹에서 바로 사용
-**🔗 [Swiss Bank AI/NLP Job Helper](https://swiss-bank-ai-nlp-job-assistant.streamlit.app)**
+**🔗 [Swiss Bank AI/NLP Job Q&A](https://swiss-bank-ai-nlp-job-assistant.streamlit.app)**
 
 1. 링크 클릭하여 앱 접속
 2. OpenAI API 키 입력
