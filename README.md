@@ -26,9 +26,6 @@
 streamlit run streamlit_app.py
 ```
 
-### 배포 방법
-- [share.streamlit.io](https://share.streamlit.io)에서 GitHub 저장소 연결 후 배포
-
 ## 환경 변수
 - OpenAI API 키 필요: 실행 시 입력하시면 됩니다.
 
