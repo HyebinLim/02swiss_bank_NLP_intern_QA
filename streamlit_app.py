@@ -100,6 +100,10 @@ st.markdown("""
     min-height: 25px !important;
     max-height: 30px !important;
 }
+/* 로딩 메시지 폰트 크기 조정 */
+.stSpinner > div > div {
+    font-size: 0.9rem !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -126,7 +130,7 @@ with api_key_container:
 if api_key and api_key != st.session_state['OPENAI_API_KEY']:
     st.session_state['OPENAI_API_KEY'] = api_key
     st.session_state['agent_loaded'] = False
-    st.success("✅ API key updated! Please wait for the system to load...")
+    st.markdown('<div style="font-size: 0.9rem; color: #28a745;">✅ API key updated! Please wait for the system to load...</div>', unsafe_allow_html=True)
 
 def translate_to_english(question, api_key):
     """한국어 질문을 영어로 번역"""
@@ -244,9 +248,9 @@ if st.session_state['OPENAI_API_KEY']:
             if agent is not None:
                 st.session_state['agent'] = agent
                 st.session_state['agent_loaded'] = True
-                st.success("✅ Q&A system loaded successfully!")
+                st.markdown('<div style="font-size: 0.9rem; color: #28a745;">✅ Q&A system loaded successfully!</div>', unsafe_allow_html=True)
             else:
-                st.error("❌ Failed to load Q&A system. Please check your API key and try again.")
+                st.markdown('<div style="font-size: 0.9rem; color: #dc3545;">❌ Failed to load Q&A system. Please check your API key and try again.</div>', unsafe_allow_html=True)
     else:
         agent = st.session_state['agent']
 
