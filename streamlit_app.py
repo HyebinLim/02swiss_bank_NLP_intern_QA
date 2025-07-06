@@ -72,14 +72,19 @@ st.markdown('''
 if 'OPENAI_API_KEY' not in st.session_state:
     st.session_state['OPENAI_API_KEY'] = ''
 
-# API 키 재설정 버튼은 Q&A 시스템 로드 후에 표시됩니다
+# API 키 입력과 재설정 버튼을 같은 줄에 배치
+col1, col2 = st.columns([3, 1])
 
-api_key = st.text_input(
-    "🔑 Enter your OpenAI API key:",
-    type="password",
-    value=st.session_state['OPENAI_API_KEY'],
-    key="api_key_input"
-)
+with col1:
+    api_key = st.text_input(
+        "🔑 Enter your OpenAI API key:",
+        type="password",
+        value=st.session_state['OPENAI_API_KEY'],
+        key="api_key_input"
+    )
+
+with col2:
+    reset_clicked = st.button("🔄 Reset", key="reset_button")
 
 # API 키가 변경되었는지 확인
 if api_key and api_key != st.session_state['OPENAI_API_KEY']:
@@ -190,8 +195,8 @@ if st.session_state['OPENAI_API_KEY']:
     if 'agent_loaded' not in st.session_state:
         st.session_state['agent_loaded'] = False
 
-    # API 키 재설정 시 캐시 클리어
-    if st.button("🔄 Reset API Key"):
+    # API 키 재설정 버튼 처리
+    if reset_clicked:
         st.session_state['OPENAI_API_KEY'] = ''
         st.session_state['agent_loaded'] = False
         load_tools_and_agent.clear()
