@@ -24,10 +24,10 @@ st.markdown("""
     font-family: 'Poppins', sans-serif;
 }
 .custom-box {
-    background-color: #e6f3ff;
+    background-color: #fff3cd;
     padding: 3px 20px;
     border-radius: 10px;
-    border: 2px solid #f7dc6f;
+    border: 2px solid #ffc107;
     margin: 10px 0;
     font-family: 'Poppins', sans-serif;
     display: flex;
@@ -59,10 +59,10 @@ h2 {
     font-weight: 500;
 }
 .question-box {
-    background-color: #d1e7ff;
+    background-color: #fff8dc;
     padding: 10px 15px;
     border-radius: 8px;
-    border: 2px solid #f7dc6f;
+    border: 2px solid #ffc107;
     margin: 15px 0;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
