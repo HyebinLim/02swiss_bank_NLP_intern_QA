@@ -33,9 +33,15 @@ st.markdown("""
     margin: 0;
     color: #2c3e50;
 }
+.custom-desc-list {
+    font-family: 'Poppins', sans-serif;
+}
 .custom-desc-list li {
     margin-bottom: 2px;
     margin-top: 2px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: #34495e;
 }
 </style>
 """, unsafe_allow_html=True)
