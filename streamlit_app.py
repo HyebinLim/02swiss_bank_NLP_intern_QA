@@ -90,10 +90,14 @@ st.markdown("""
     align-items: center;
     height: 100%;
 }
-/* Streamlit 버튼의 기본 마진 제거 */
+/* Streamlit 버튼의 기본 마진 제거 및 크기 조정 */
 .stButton > button {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.8rem !important;
+    height: auto !important;
+    min-height: 30px !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -102,7 +106,7 @@ st.markdown("""
 api_key_container = st.container()
 
 with api_key_container:
-    col1, col2 = st.columns([4, 1])
+    col1, col2 = st.columns([5, 1])
     
     with col1:
         api_key = st.text_input(
@@ -113,7 +117,7 @@ with api_key_container:
         )
     
     with col2:
-        st.markdown('<div class="reset-button">', unsafe_allow_html=True)
+        st.markdown('<div style="margin-top: 1.5rem;">', unsafe_allow_html=True)
         reset_clicked = st.button("🔄 Reset", key="reset_button")
         st.markdown('</div>', unsafe_allow_html=True)
 
