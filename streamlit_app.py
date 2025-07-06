@@ -136,12 +136,16 @@ def translate_to_english(question, api_key):
     """한국어 질문을 영어로 번역"""
     try:
         import os
+        import re
         # proxies 설정 제거 (OpenAI 1.56.0+ 호환성)
         proxy_vars = ["OPENAI_PROXY", "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY"]
         for var in proxy_vars:
             if var in os.environ:
                 del os.environ[var]
-            
+        
+        # 이모지 제거
+        question_clean = re.sub(r'[^\w\s\.,!?;:()\-]', '', question)
+        
         from openai import OpenAI
         client = OpenAI(api_key=api_key)
         
@@ -149,7 +153,7 @@ def translate_to_english(question, api_key):
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful translator specializing in job-related questions. Translate the user's question to English, focusing on job search, career, salary, requirements, and workplace topics. If the question is already in English, return it as is. Only return the translated question, nothing else. Be precise with job-related terminology."},
-                {"role": "user", "content": question}
+                {"role": "user", "content": question_clean}
             ],
             temperature=0
         )
