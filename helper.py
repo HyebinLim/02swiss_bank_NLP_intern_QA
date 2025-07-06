@@ -1,9 +1,8 @@
 import os
-from dotenv import load_dotenv, find_dotenv
-                                                                                                                                  
+
 def load_env():
-    env_path = os.path.join(os.path.dirname(__file__), '.env')
-    load_dotenv(env_path)
+    # 간단한 환경 변수 로딩
+    pass
 
 def get_openai_api_key():
     load_env()

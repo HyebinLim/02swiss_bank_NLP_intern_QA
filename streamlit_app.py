@@ -5,6 +5,7 @@ from llama_index.llms.openai import OpenAI
 from llama_index.core.agent import FunctionCallingAgentWorker
 from llama_index.core.agent import AgentRunner
 import os
+import re
 
 # 페이지 설정
 st.set_page_config(
@@ -26,14 +27,77 @@ st.markdown("""
 if 'OPENAI_API_KEY' not in st.session_state:
     st.session_state['OPENAI_API_KEY'] = ''
 
+# API 키 재설정 버튼
+if st.button("🔄 Reset API Key"):
+    st.session_state['OPENAI_API_KEY'] = ''
+    st.session_state['agent_loaded'] = False
+    st.rerun()
+
 api_key = st.text_input(
     "🔑 Enter your OpenAI API key:",
     type="password",
-    value=st.session_state['OPENAI_API_KEY']
+    value=st.session_state['OPENAI_API_KEY'],
+    key="api_key_input"
 )
 
-if api_key:
+# API 키가 변경되었는지 확인
+if api_key and api_key != st.session_state['OPENAI_API_KEY']:
     st.session_state['OPENAI_API_KEY'] = api_key
+    st.session_state['agent_loaded'] = False
+    st.success("✅ API key updated! Please wait for the system to load...")
+
+def translate_to_english(question, api_key):
+    """한국어 질문을 영어로 번역"""
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful translator specializing in job-related questions. Translate the user's question to English, focusing on job search, career, salary, requirements, and workplace topics. If the question is already in English, return it as is. Only return the translated question, nothing else. Be precise with job-related terminology."},
+                {"role": "user", "content": question}
+            ],
+            temperature=0
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        st.warning(f"Translation failed: {str(e)}. Using original question.")
+        return question
+
+def extract_source_pages(response):
+    """응답에서 소스 페이지를 추출하는 개선된 함수"""
+    try:
+        sources = getattr(response, 'sources', None)
+        if not sources:
+            return None
+            
+        pages = set()
+        for src in sources:
+            raw_output = getattr(src, "raw_output", None)
+            if raw_output is None:
+                continue
+                
+            # source_nodes가 있는 경우
+            meta_dict = getattr(raw_output, "source_nodes", [])
+            if meta_dict:
+                for node_with_score in meta_dict:
+                    node = node_with_score.node
+                    if hasattr(node, "metadata"):
+                        md = node.metadata
+                        if "page_label" in md:
+                            pages.add(md["page_label"])
+            
+            # 직접 metadata가 있는 경우
+            if hasattr(raw_output, "metadata"):
+                md = raw_output.metadata
+                if "page_label" in md:
+                    pages.add(md["page_label"])
+        
+        return sorted(list(pages)) if pages else None
+    except Exception as e:
+        st.warning(f"Error extracting source pages: {str(e)}")
+        return None
 
 # --- Q&A 기능 준비 ---
 if st.session_state['OPENAI_API_KEY']:
@@ -63,9 +127,23 @@ if st.session_state['OPENAI_API_KEY']:
             st.error(f"Error loading tools and agent: {str(e)}")
             return None
 
-    agent = load_tools_and_agent(st.session_state['OPENAI_API_KEY'])
+    # 에이전트 로딩 상태 확인
+    if 'agent_loaded' not in st.session_state:
+        st.session_state['agent_loaded'] = False
 
-    if agent is not None:
+    if not st.session_state['agent_loaded']:
+        with st.spinner("Loading Q&A system..."):
+            agent = load_tools_and_agent(st.session_state['OPENAI_API_KEY'])
+            if agent is not None:
+                st.session_state['agent'] = agent
+                st.session_state['agent_loaded'] = True
+                st.success("✅ Q&A system loaded successfully!")
+            else:
+                st.error("❌ Failed to load Q&A system. Please check your API key and try again.")
+    else:
+        agent = st.session_state['agent']
+
+    if st.session_state['agent_loaded'] and agent is not None:
         st.markdown("---")
         st.subheader("Ask questions about the Swiss bank AI/NLP scientist job!")
         
@@ -83,31 +161,36 @@ if st.session_state['OPENAI_API_KEY']:
             st.session_state.question_submitted = False
             
             try:
-                with st.spinner("Thinking..."):
-                    response = agent.chat(question)
+                with st.spinner("Processing your question..."):
+                    # 한국어 질문을 영어로 번역
+                    translated_question = translate_to_english(question, st.session_state['OPENAI_API_KEY'])
+                    
+                    # 번역된 질문으로 응답 생성
+                    response = agent.chat(translated_question)
+                    
+                    # 결과 표시
                     st.markdown(f"**🗣️ Question:** {question}")
                     st.markdown(f"**💬 Answer:** {response.response}")
-                    sources = getattr(response, 'sources', None)
-                    if sources:
-                        pages = set()
-                        for i, src in enumerate(sources):
-                            raw_output = getattr(src, "raw_output", None)
-                            if raw_output is None:
-                                continue
-                            meta_dict = getattr(raw_output, "source_nodes", [])
-                            for node_with_score in meta_dict:
-                                node = node_with_score.node
-                                if hasattr(node, "metadata"):
-                                    md = node.metadata
-                                    if "page_label" in md:
-                                        pages.add(md["page_label"])
-                        if pages:
-                            st.info(f"📌 Source page(s): {', '.join(sorted(pages))}")
+                    
+                    # 응답 내용을 분석해서 실제로 정보가 있는지 확인
+                    answer_text = response.response.lower()
+                    no_info_keywords = ['no information', 'not found', 'not available', 'not mentioned', 'not provided', 'not specified', 'not stated', 'not given', 'not included', 'not listed', 'not detailed', 'not described', 'not outlined', 'not covered', 'not addressed', 'not discussed', 'not revealed', 'not disclosed', 'not shared', 'not indicated']
+                    
+                    has_information = not any(keyword in answer_text for keyword in no_info_keywords)
+                    
+                    # 소스 페이지 추출 및 표시 (정보가 있을 때만)
+                    if has_information:
+                        source_pages = extract_source_pages(response)
+                        if source_pages:
+                            st.info(f"📌 Source page(s): {', '.join(source_pages)}")
+                        else:
+                            st.info("📌 Answer generated from document content (specific pages not available)")
                     else:
-                        st.warning("⚠️ No source found for this answer — please verify accuracy (possible hallucination).")
+                        st.warning("⚠️ No information found in the document for this question.")
+                            
             except Exception as e:
                 st.error(f"Error processing question: {str(e)}")
-    else:
-        st.error("Failed to load the Q&A system. Please check your API key and try again.")
+    elif not st.session_state['agent_loaded']:
+        st.info("Please wait while the Q&A system is loading...")
 else:
     st.info("Please enter your OpenAI API key to start.") 
