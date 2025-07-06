@@ -27,7 +27,7 @@ st.markdown("""
     background-color: transparent;
     padding: 3px 20px;
     border-radius: 10px;
-    border: 2px solid #fffacd;
+    border: 2px solid #87ceeb;
     margin: 10px 0;
     font-family: 'Poppins', sans-serif;
     display: flex;
@@ -62,7 +62,7 @@ h2 {
     background-color: transparent;
     padding: 10px 15px;
     border-radius: 8px;
-    border: 2px solid #fffacd;
+    border: 2px solid #87ceeb;
     margin: 15px 0;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
