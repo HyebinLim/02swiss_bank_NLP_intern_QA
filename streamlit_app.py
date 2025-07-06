@@ -11,7 +11,7 @@ import re
 st.set_page_config(
     page_title="Swiss Bank AI/NLP Job Q&A",
     page_icon="🏦",
-    layout="wide",
+    layout="centered",
     initial_sidebar_state="collapsed"
 )
 
@@ -58,7 +58,7 @@ h2 {
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="custom-box" style="text-align: center;"><h3>Want a Swiss Bank AI/NLP job?</h3></div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-box"><h3>Want a Swiss Bank AI/NLP job?</h3></div>', unsafe_allow_html=True)
 st.markdown('''
 <div class="custom-desc-list">
 <ul>
@@ -260,7 +260,7 @@ if st.session_state['OPENAI_API_KEY']:
 
     if st.session_state['agent_loaded'] and agent is not None:
         st.markdown("---")
-        st.markdown('<div class="custom-box" style="text-align: center;"><h3>Ask questions about the Swiss bank AI/NLP scientist job!</h3></div>', unsafe_allow_html=True)
+        st.markdown("### Ask questions about the Swiss bank AI/NLP scientist job!")
         
         # 세션 상태 초기화
         if 'question_submitted' not in st.session_state:
