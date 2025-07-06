@@ -26,6 +26,9 @@ st.markdown("""
     border-radius: 10px;
     margin: 10px 0;
     font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    min-height: 50px;
 }
 .custom-box h3 {
     font-family: 'Poppins', sans-serif;
