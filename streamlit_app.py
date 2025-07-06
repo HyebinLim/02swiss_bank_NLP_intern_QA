@@ -29,20 +29,8 @@ if 'OPENAI_API_KEY' not in st.session_state:
 
 # API 키 재설정 버튼
 if st.button("🔄 Reset API Key"):
-    # 모든 관련 세션 상태 초기화
     st.session_state['OPENAI_API_KEY'] = ''
     st.session_state['agent_loaded'] = False
-    if 'agent' in st.session_state:
-        del st.session_state['agent']
-    if 'question_submitted' in st.session_state:
-        del st.session_state['question_submitted']
-    if 'current_question' in st.session_state:
-        del st.session_state['current_question']
-    
-    # 캐시된 리소스도 초기화
-    st.cache_resource.clear()
-    
-    st.success("🔄 API key reset successfully! Please enter a new API key.")
     st.rerun()
 
 api_key = st.text_input(
@@ -127,14 +115,7 @@ if st.session_state['OPENAI_API_KEY']:
                 return None
                 
             vector_tool, summary_tool = get_doc_tools(pdf_path, "swissbankjob")
-            
-            # OpenAI LLM 설정 - proxies 문제 해결
-            llm = OpenAI(
-                model="gpt-3.5-turbo", 
-                temperature=0,
-                api_key=api_key
-            )
-            
+            llm = OpenAI(model="gpt-3.5-turbo", temperature=0)
             agent_worker = FunctionCallingAgentWorker.from_tools(
                 [vector_tool, summary_tool],
                 llm=llm,
