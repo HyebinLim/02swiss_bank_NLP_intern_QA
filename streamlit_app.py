@@ -284,8 +284,7 @@ if st.session_state['OPENAI_API_KEY']:
                     response = agent.chat(translated_question)
                     
                     # 결과 표시
-                    st.markdown(f"**🗣️ Question:** {question}")
-                    st.markdown(f"**💬 Answer:** {response.response}")
+                    st.markdown(f"<div style='font-size: 1.2rem; font-weight: 600; margin: 1rem 0;'><strong>💬 Answer:</strong> {response.response}</div>", unsafe_allow_html=True)
                     
                     # 응답 내용을 분석해서 실제로 정보가 있는지 확인
                     answer_text = response.response.lower()
@@ -297,13 +296,11 @@ if st.session_state['OPENAI_API_KEY']:
                     if has_information:
                         source_pages = extract_source_pages(response)
                         if source_pages:
-                            st.info(f"📌 Source page(s): {', '.join(source_pages)}")
-                            st.info("📄 Data source: [GitHub PDF](https://github.com/HyebinLim/02swiss_bank_NLP_intern_QA/blob/master/swiss_bank_job.pdf)")
+                            st.markdown(f'<div style="font-size: 0.8rem; background-color: #f0f2f6; padding: 0.5rem; border-radius: 0.3rem; margin: 0.5rem 0;">📌 Source page(s): {", ".join(source_pages)}<br>📄 Data source: <a href="https://github.com/HyebinLim/02swiss_bank_NLP_intern_QA/blob/master/swiss_bank_job.pdf" target="_blank">GitHub PDF</a></div>', unsafe_allow_html=True)
                         else:
-                            st.info("📌 Answer generated from document content (specific pages not available)")
-                            st.info("📄 Data source: [GitHub PDF](https://github.com/HyebinLim/02swiss_bank_NLP_intern_QA/blob/master/swiss_bank_job.pdf)")
+                            st.markdown(f'<div style="font-size: 0.8rem; background-color: #f0f2f6; padding: 0.5rem; border-radius: 0.3rem; margin: 0.5rem 0;">📌 Answer generated from document content (specific pages not available)<br>📄 Data source: <a href="https://github.com/HyebinLim/02swiss_bank_NLP_intern_QA/blob/master/swiss_bank_job.pdf" target="_blank">GitHub PDF</a></div>', unsafe_allow_html=True)
                     else:
-                        st.warning("⚠️ No information found in the document for this question.")
+                        st.markdown('<div style="font-size: 0.8rem;">⚠️ No information found in the document for this question.</div>', unsafe_allow_html=True)
                             
             except Exception as e:
                 st.error(f"Error processing question: {str(e)}")
