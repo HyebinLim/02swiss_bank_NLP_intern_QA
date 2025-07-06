@@ -94,10 +94,11 @@ st.markdown("""
 .stButton > button {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    padding: 0.25rem 0.5rem !important;
-    font-size: 0.8rem !important;
+    padding: 0.15rem 0.3rem !important;
+    font-size: 0.7rem !important;
     height: auto !important;
-    min-height: 30px !important;
+    min-height: 25px !important;
+    max-height: 30px !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -117,7 +118,7 @@ with api_key_container:
         )
     
     with col2:
-        st.markdown('<div style="margin-top: 1.5rem;">', unsafe_allow_html=True)
+        st.markdown('<div style="margin-top: 1.7rem;">', unsafe_allow_html=True)
         reset_clicked = st.button("🔄 Reset", key="reset_button")
         st.markdown('</div>', unsafe_allow_html=True)
 
@@ -251,7 +252,7 @@ if st.session_state['OPENAI_API_KEY']:
 
     if st.session_state['agent_loaded'] and agent is not None:
         st.markdown("---")
-        st.markdown("### Ask questions about the Swiss bank AI/NLP scientist job!")
+        st.markdown("#### Ask questions about the Swiss bank AI/NLP scientist job!")
         
         # 세션 상태 초기화
         if 'question_submitted' not in st.session_state:
