@@ -25,14 +25,22 @@ st.markdown("""
     border-radius: 10px;
     margin: 10px 0;
 }
+.custom-desc-list li {
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown('<div class="custom-box"><h3>Want a Swiss Bank AI/NLP job?</h3></div>', unsafe_allow_html=True)
-st.markdown("""
-* Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank in Zurich during my master's at University of Zurich.
-- Source: [89% 직장인 일지](https://blog.naver.com/imyourbest)
-""")
+st.markdown('''
+<div class="custom-desc-list">
+<ul>
+<li>Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank in Zurich during my master's at University of Zurich.</li>
+<li>Source: <a href="https://blog.naver.com/imyourbest" target="_blank">89% 직장인 일지</a></li>
+</ul>
+</div>
+''', unsafe_allow_html=True)
 
 # --- API 키 입력 ---
 if 'OPENAI_API_KEY' not in st.session_state:
