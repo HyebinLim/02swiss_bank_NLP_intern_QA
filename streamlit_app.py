@@ -20,6 +20,9 @@ st.set_page_config(
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+* {
+    font-family: 'Poppins', sans-serif;
+}
 .custom-box {
     background-color: #e6f3ff;
     padding: 5px 20px;
@@ -46,6 +49,11 @@ st.markdown("""
     font-weight: 400;
     color: #34495e;
     font-size: 14px;
+}
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
 }
 </style>
 """, unsafe_allow_html=True)
