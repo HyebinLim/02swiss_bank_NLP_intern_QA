@@ -50,7 +50,7 @@ st.markdown('<div class="custom-box"><h3>Want a Swiss Bank AI/NLP job?</h3></div
 st.markdown('''
 <div class="custom-desc-list">
 <ul>
-<li>Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank during my master's at University of Zurich.</li>
+<li>Ask me anything about my journey to become an AI/NLP scientist at a bank in Switzerland during my master's at University of Zurich.</li>
 <li>Answers based on <a href="https://blog.naver.com/imyourbest" target="_blank">89% 직장인 일지</a></li>
 </ul>
 </div>
