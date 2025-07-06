@@ -52,7 +52,7 @@ st.markdown("""
 }
 h2 {
     font-family: 'Poppins', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
 }
 </style>
@@ -114,7 +114,7 @@ def translate_to_english(question, api_key):
         return question
 
 def extract_source_pages(response):
-    """응답에서 소스 페이지를 추출하는 개선된 함수"""
+    """응답에서 소스 페이지를 추출하는 개선된 함수 - 상위 3-5개만 표시"""
     try:
         sources = getattr(response, 'sources', None)
         if not sources:
@@ -142,7 +142,13 @@ def extract_source_pages(response):
                 if "page_label" in md:
                     pages.add(md["page_label"])
         
-        return sorted(list(pages)) if pages else None
+        if pages:
+            # 페이지 번호를 숫자로 변환하여 정렬
+            sorted_pages = sorted([int(p) if p.isdigit() else 0 for p in pages])
+            # 상위 5개만 반환
+            top_pages = sorted_pages[:5]
+            return [str(p) for p in top_pages]
+        return None
     except Exception as e:
         st.warning(f"Error extracting source pages: {str(e)}")
         return None
@@ -243,8 +249,10 @@ if st.session_state['OPENAI_API_KEY']:
                         source_pages = extract_source_pages(response)
                         if source_pages:
                             st.info(f"📌 Source page(s): {', '.join(source_pages)}")
+                            st.info("📄 Data source: [GitHub PDF](https://github.com/HyebinLim/02swiss_bank_NLP_intern_QA/blob/master/swiss_bank_job.pdf)")
                         else:
                             st.info("📌 Answer generated from document content (specific pages not available)")
+                            st.info("📄 Data source: [GitHub PDF](https://github.com/HyebinLim/02swiss_bank_NLP_intern_QA/blob/master/swiss_bank_job.pdf)")
                     else:
                         st.warning("⚠️ No information found in the document for this question.")
                             
