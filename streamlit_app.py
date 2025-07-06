@@ -18,9 +18,9 @@ st.set_page_config(
 # --- 앱 설명 표시 ---
 st.header("🏦Want a Swiss Bank AI/NLP job?")
 st.markdown("""
-Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank in Zurich during my master's at University of Zurich.
+💬 Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank in Zurich during my master's at University of Zurich.
 
-Source: [89% 직장인 일지](https://blog.naver.com/imyourbest)
+📖 Source: [89% 직장인 일지](https://blog.naver.com/imyourbest)
 """)
 
 # --- API 키 입력 ---
