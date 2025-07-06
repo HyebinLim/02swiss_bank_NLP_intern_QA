@@ -16,7 +16,19 @@ st.set_page_config(
 )
 
 # --- 앱 설명 표시 ---
-st.subheader("Want a Swiss Bank AI/NLP job?")
+# CSS로 네모상자 스타일 적용
+st.markdown("""
+<style>
+.custom-box {
+    background-color: #fffbf0;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown('<div class="custom-box"><h3>Want a Swiss Bank AI/NLP job?</h3></div>', unsafe_allow_html=True)
 st.markdown("""
 💬 Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank in Zurich during my master's at University of Zurich.
 
