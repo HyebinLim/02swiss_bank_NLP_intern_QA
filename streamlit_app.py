@@ -20,7 +20,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 .custom-box {
-    background-color: #f0f8ff;
+    background-color: #cce4ff;
     padding: 10px 20px;
     border-radius: 10px;
     margin: 10px 0;
@@ -37,7 +37,7 @@ st.markdown('''
 <div class="custom-desc-list">
 <ul>
 <li>Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank in Zurich during my master's at University of Zurich.</li>
-<li>Source: <a href="https://blog.naver.com/imyourbest" target="_blank">89% 직장인 일지</a></li>
+<li>Answers based on <a href="https://blog.naver.com/imyourbest" target="_blank">89% 직장인 일지</a></li>
 </ul>
 </div>
 ''', unsafe_allow_html=True)
