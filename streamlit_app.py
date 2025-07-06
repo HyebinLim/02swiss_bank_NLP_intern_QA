@@ -46,9 +46,11 @@ def translate_to_english(question, api_key):
     """한국어 질문을 영어로 번역"""
     try:
         import os
-        # proxies 설정 제거
-        if "OPENAI_PROXY" in os.environ:
-            del os.environ["OPENAI_PROXY"]
+        # proxies 설정 제거 (OpenAI 1.56.0+ 호환성)
+        proxy_vars = ["OPENAI_PROXY", "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY"]
+        for var in proxy_vars:
+            if var in os.environ:
+                del os.environ[var]
             
         from openai import OpenAI
         client = OpenAI(api_key=api_key)
@@ -108,9 +110,11 @@ if st.session_state['OPENAI_API_KEY']:
         try:
             import os
             os.environ["OPENAI_API_KEY"] = api_key
-            # proxies 설정 제거
-            if "OPENAI_PROXY" in os.environ:
-                del os.environ["OPENAI_PROXY"]
+            # proxies 설정 제거 (OpenAI 1.56.0+ 호환성)
+            proxy_vars = ["OPENAI_PROXY", "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY"]
+            for var in proxy_vars:
+                if var in os.environ:
+                    del os.environ[var]
             
             # PDF 파일 존재 확인 (원본 사용 - 텍스트 보존)
             pdf_path = "swiss_bank_job.pdf"
