@@ -20,7 +20,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 .custom-box {
-    background-color: #fffbf0;
+    background-color: #f0f8ff;
     padding: 10px 20px;
     border-radius: 10px;
     margin: 10px 0;
@@ -31,7 +31,6 @@ st.markdown("""
 st.markdown('<div class="custom-box"><h3>Want a Swiss Bank AI/NLP job?</h3></div>', unsafe_allow_html=True)
 st.markdown("""
 * Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank in Zurich during my master's at University of Zurich.
-
 - Source: [89% 직장인 일지](https://blog.naver.com/imyourbest)
 """)
 
