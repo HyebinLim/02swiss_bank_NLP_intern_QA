@@ -45,6 +45,7 @@ st.markdown("""
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     color: #34495e;
+    font-size: 14px;
 }
 </style>
 """, unsafe_allow_html=True)
