@@ -1,5 +1,9 @@
 #abstract all of this into a function that takes in a PDF file name 
 
+# NLTK 설정 - 권한 문제 해결
+import os
+os.environ['NLTK_DATA'] = '/tmp/nltk_data'
+
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, SummaryIndex
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.tools import FunctionTool, QueryEngineTool
@@ -41,6 +45,13 @@ def get_doc_tools(
             # OpenAI 클라이언트 설정에서 proxies 제거
             import os
             os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY", "")
+            
+            # NLTK 데이터 다운로드 문제 해결
+            try:
+                import nltk
+                nltk.download('punkt', quiet=True)
+            except:
+                pass  # NLTK 다운로드 실패해도 계속 진행
             
             vector_index = VectorStoreIndex(nodes)
         
