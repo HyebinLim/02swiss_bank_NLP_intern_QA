@@ -85,7 +85,10 @@ st.markdown("""
     flex: 1;
 }
 .reset-button {
-    margin-top: 1.5rem;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 </style>
 """, unsafe_allow_html=True)
