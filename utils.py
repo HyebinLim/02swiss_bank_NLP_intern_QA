@@ -1,8 +1,19 @@
 #abstract all of this into a function that takes in a PDF file name 
 
-# NLTK 설정 - 권한 문제 해결
+# NLTK 설정 - 권한 문제 해결 (더 안전한 방법)
 import os
-os.environ['NLTK_DATA'] = '/tmp/nltk_data'
+import tempfile
+
+# 임시 디렉토리 생성
+temp_dir = tempfile.mkdtemp()
+os.environ['NLTK_DATA'] = temp_dir
+
+# llama-index import 전에 NLTK 설정
+try:
+    import nltk
+    nltk.download('punkt', download_dir=temp_dir, quiet=True)
+except:
+    pass
 
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, SummaryIndex
 from llama_index.core.node_parser import SentenceSplitter
