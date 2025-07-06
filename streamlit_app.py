@@ -20,7 +20,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 .custom-box {
-    background-color: #cce4ff;
+    background-color: #e6f3ff;
     padding: 10px 20px;
     border-radius: 10px;
     margin: 10px 0;
