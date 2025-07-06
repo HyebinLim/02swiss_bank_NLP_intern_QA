@@ -38,6 +38,10 @@ def get_doc_tools(
             nodes = filtered_nodes
         
         with st.spinner("Creating vector index..."):
+            # OpenAI 클라이언트 설정에서 proxies 제거
+            import os
+            os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY", "")
+            
             vector_index = VectorStoreIndex(nodes)
         
         def vector_query(

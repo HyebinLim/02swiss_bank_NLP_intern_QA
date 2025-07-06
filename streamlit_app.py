@@ -127,7 +127,14 @@ if st.session_state['OPENAI_API_KEY']:
                 return None
                 
             vector_tool, summary_tool = get_doc_tools(pdf_path, "swissbankjob")
-            llm = OpenAI(model="gpt-3.5-turbo", temperature=0)
+            
+            # OpenAI LLM 설정 - proxies 문제 해결
+            llm = OpenAI(
+                model="gpt-3.5-turbo", 
+                temperature=0,
+                api_key=api_key
+            )
+            
             agent_worker = FunctionCallingAgentWorker.from_tools(
                 [vector_tool, summary_tool],
                 llm=llm,
