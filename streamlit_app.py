@@ -45,6 +45,11 @@ if api_key and api_key != st.session_state['OPENAI_API_KEY']:
 def translate_to_english(question, api_key):
     """한국어 질문을 영어로 번역"""
     try:
+        import os
+        # proxies 설정 제거
+        if "OPENAI_PROXY" in os.environ:
+            del os.environ["OPENAI_PROXY"]
+            
         from openai import OpenAI
         client = OpenAI(api_key=api_key)
         
@@ -103,6 +108,9 @@ if st.session_state['OPENAI_API_KEY']:
         try:
             import os
             os.environ["OPENAI_API_KEY"] = api_key
+            # proxies 설정 제거
+            if "OPENAI_PROXY" in os.environ:
+                del os.environ["OPENAI_PROXY"]
             
             # PDF 파일 존재 확인 (원본 사용 - 텍스트 보존)
             pdf_path = "swiss_bank_job.pdf"
