@@ -9,7 +9,7 @@ Q&A chatbot based on Swiss bank AI/NLP scientist experience
 
 ## 🚀 Get Started
 
-**🔗 [Swiss Bank AI/NLP Job Q&A](https://swiss-bank-ai-nlp-job-assistant.streamlit.app)**
+**🔗 [Swiss Bank AI/NLP Job Q&A](https://swiss-bank-ai-nlp-job-assistant.streamlit.app/)**
 
 1. Click the link above
 2. Enter your OpenAI API key

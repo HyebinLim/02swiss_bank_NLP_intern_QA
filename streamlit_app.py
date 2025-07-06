@@ -16,11 +16,9 @@ st.set_page_config(
 )
 
 # --- 앱 설명 표시 ---
-st.header("🏦Want a Swiss Bank AI/NLP job? Ask me!")
+st.header("🏦Want a Swiss Bank AI/NLP job?")
 st.markdown("""
-- I found AI/NLP scientist position at a bank in Zurich, Switzerland on the last year of my master's at University of Zurich.
-- I documented my full preparation journey on my blog [(89% 직장인 일지)](https://blog.naver.com/imyourbest)
-- A lot of people have asked me for tips — so I launched a little Q&A bot to answer your questions!
+Ask me any questions about my full preparation for an AI/NLP scientist position at a bank in Zurich, Switzerland during my master's at University of Zurich. Source: [(89% 직장인 일지)](https://blog.naver.com/imyourbest)
 """)
 
 # --- API 키 입력 ---
@@ -124,37 +122,12 @@ if st.session_state['OPENAI_API_KEY']:
                 
             vector_tool, summary_tool = get_doc_tools(pdf_path, "swissbankjob")
             llm = OpenAI(model="gpt-3.5-turbo", temperature=0)
-            
-            # 에이전트 생성 방식 변경 (chat_with_tools 오류 해결)
-            try:
-                agent_worker = FunctionCallingAgentWorker.from_tools(
-                    [vector_tool, summary_tool],
-                    llm=llm,
-                    verbose=False
-                )
-                agent = AgentRunner(agent_worker)
-            except AttributeError:
-                # 대체 방법: 직접 쿼리 엔진 사용
-                from llama_index.core import VectorStoreIndex
-                from llama_index.core.node_parser import SentenceSplitter
-                from llama_index.core import SimpleDirectoryReader
-                
-                documents = SimpleDirectoryReader(input_files=[pdf_path]).load_data()
-                splitter = SentenceSplitter(chunk_size=1024, chunk_overlap=100)
-                nodes = splitter.get_nodes_from_documents(documents)
-                vector_index = VectorStoreIndex(nodes)
-                
-                # 간단한 쿼리 엔진으로 대체
-                class SimpleAgent:
-                    def __init__(self, index):
-                        self.index = index
-                    
-                    def chat(self, message):
-                        query_engine = self.index.as_query_engine()
-                        response = query_engine.query(message)
-                        return type('Response', (), {'response': str(response)})
-                
-                agent = SimpleAgent(vector_index)
+            agent_worker = FunctionCallingAgentWorker.from_tools(
+                [vector_tool, summary_tool],
+                llm=llm,
+                verbose=False
+            )
+            agent = AgentRunner(agent_worker)
             return agent
         except Exception as e:
             st.error(f"Error loading tools and agent: {str(e)}")
@@ -232,5 +205,4 @@ if st.session_state['OPENAI_API_KEY']:
                 st.error(f"Error processing question: {str(e)}")
     elif not st.session_state['agent_loaded']:
         st.info("Please wait while the Q&A system is loading...")
-else:
-    st.info("Please enter your OpenAI API key to start.") 
+# API 키 입력 안내 메시지 제거 
