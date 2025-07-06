@@ -24,10 +24,9 @@ st.markdown("""
     font-family: 'Poppins', sans-serif;
 }
 .custom-box {
-    background-color: #fef9e7;
+    background-color: #fefbf3;
     padding: 3px 20px;
     border-radius: 10px;
-    border: 2px solid #f39c12;
     margin: 10px 0;
     font-family: 'Poppins', sans-serif;
     display: flex;
@@ -62,7 +61,6 @@ h2 {
     background-color: #f7dc6f;
     padding: 10px 15px;
     border-radius: 8px;
-    border: 2px solid #f39c12;
     margin: 15px 0;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
