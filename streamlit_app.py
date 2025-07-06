@@ -297,7 +297,7 @@ if st.session_state['OPENAI_API_KEY']:
                     response = agent.chat(translated_question)
                     
                     # 결과 표시
-                    st.markdown(f"<div style='font-size: 1.2rem; font-weight: 600; margin: 1rem 0;'><strong>💬 Answer:</strong> {response.response}</div>", unsafe_allow_html=True)
+                    st.markdown(f"<div style='font-size: 1rem; margin: 1rem 0;'>💬 Answer: {response.response}</div>", unsafe_allow_html=True)
                     
                     # 응답 내용을 분석해서 실제로 정보가 있는지 확인
                     answer_text = response.response.lower()
