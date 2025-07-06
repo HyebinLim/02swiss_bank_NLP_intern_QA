@@ -19,11 +19,19 @@ st.set_page_config(
 # CSS로 네모상자 스타일 적용
 st.markdown("""
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 .custom-box {
     background-color: #e6f3ff;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 10px;
     margin: 10px 0;
+    font-family: 'Poppins', sans-serif;
+}
+.custom-box h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin: 0;
+    color: #2c3e50;
 }
 .custom-desc-list li {
     margin-bottom: 2px;
