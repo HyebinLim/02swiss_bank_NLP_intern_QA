@@ -63,8 +63,8 @@ h2 {
     background-color: transparent;
     padding: 10px 15px;
     border-radius: 0px;
-    border-top: 3px solid #87ceeb;
-    border-bottom: 3px solid #87ceeb;
+    border-top: 3px solid #4682b4;
+    border-bottom: 3px solid #4682b4;
     margin: 15px 0;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
