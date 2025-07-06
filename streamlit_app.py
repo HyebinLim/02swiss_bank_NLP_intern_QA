@@ -31,7 +31,9 @@ st.markdown("""
     font-family: 'Poppins', sans-serif;
     display: flex;
     align-items: center;
+    justify-content: center;
     min-height: 50px;
+    text-align: center;
 }
 .custom-box h3 {
     font-family: 'Poppins', sans-serif;
@@ -54,6 +56,17 @@ h2 {
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 500;
+}
+.question-box {
+    background-color: #e6f3ff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2c3e50;
+    text-align: center;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -260,7 +273,7 @@ if st.session_state['OPENAI_API_KEY']:
 
     if st.session_state['agent_loaded'] and agent is not None:
         st.markdown("---")
-        st.markdown("### Ask questions about the Swiss bank AI/NLP scientist job!")
+        st.markdown('<div class="question-box">Ask questions about the Swiss bank AI/NLP scientist job!</div>', unsafe_allow_html=True)
         
         # 세션 상태 초기화
         if 'question_submitted' not in st.session_state:
