@@ -90,9 +90,10 @@ st.markdown("""
     align-items: center;
     height: 100%;
 }
-.reset-button button {
-    margin-top: 0;
-    height: 38px;
+/* Streamlit 버튼의 기본 마진 제거 */
+.stButton > button {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 </style>
 """, unsafe_allow_html=True)
