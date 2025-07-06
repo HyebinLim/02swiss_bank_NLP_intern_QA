@@ -118,7 +118,7 @@ with api_key_container:
         )
     
     with col2:
-        st.markdown('<div style="margin-top: 1.7rem;">', unsafe_allow_html=True)
+        st.markdown('<div style="margin-top: 2rem;">', unsafe_allow_html=True)
         reset_clicked = st.button("🔄 Reset", key="reset_button")
         st.markdown('</div>', unsafe_allow_html=True)
 
