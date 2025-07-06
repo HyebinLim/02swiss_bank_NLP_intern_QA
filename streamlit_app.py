@@ -24,7 +24,7 @@ st.markdown("""
     font-family: 'Poppins', sans-serif;
 }
 .custom-box {
-    background-color: #fefbf3;
+    background-color: #fef9e7;
     padding: 3px 20px;
     border-radius: 10px;
     margin: 10px 0;
@@ -58,7 +58,7 @@ h2 {
     font-weight: 500;
 }
 .question-box {
-    background-color: #f7dc6f;
+    background-color: #f8f4d9;
     padding: 10px 15px;
     border-radius: 8px;
     margin: 15px 0;
