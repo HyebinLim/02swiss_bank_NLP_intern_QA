@@ -90,6 +90,10 @@ st.markdown("""
     align-items: center;
     height: 100%;
 }
+.reset-button button {
+    margin-top: 0;
+    height: 38px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -242,7 +246,7 @@ if st.session_state['OPENAI_API_KEY']:
 
     if st.session_state['agent_loaded'] and agent is not None:
         st.markdown("---")
-        st.subheader("Ask questions about the Swiss bank AI/NLP scientist job!")
+        st.markdown("### Ask questions about the Swiss bank AI/NLP scientist job!")
         
         # 세션 상태 초기화
         if 'question_submitted' not in st.session_state:
