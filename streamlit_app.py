@@ -73,18 +73,41 @@ if 'OPENAI_API_KEY' not in st.session_state:
     st.session_state['OPENAI_API_KEY'] = ''
 
 # API 키 입력과 재설정 버튼을 같은 줄에 배치
-col1, col2 = st.columns([3, 1])
+st.markdown("""
+<style>
+.api-key-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+.api-key-input {
+    flex: 1;
+}
+.reset-button {
+    margin-top: 1.5rem;
+}
+</style>
+""", unsafe_allow_html=True)
 
-with col1:
-    api_key = st.text_input(
-        "🔑 Enter your OpenAI API key:",
-        type="password",
-        value=st.session_state['OPENAI_API_KEY'],
-        key="api_key_input"
-    )
+# 컨테이너 생성
+api_key_container = st.container()
 
-with col2:
-    reset_clicked = st.button("🔄 Reset", key="reset_button")
+with api_key_container:
+    col1, col2 = st.columns([4, 1])
+    
+    with col1:
+        api_key = st.text_input(
+            "🔑 Enter your OpenAI API key:",
+            type="password",
+            value=st.session_state['OPENAI_API_KEY'],
+            key="api_key_input"
+        )
+    
+    with col2:
+        st.markdown('<div class="reset-button">', unsafe_allow_html=True)
+        reset_clicked = st.button("🔄 Reset", key="reset_button")
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # API 키가 변경되었는지 확인
 if api_key and api_key != st.session_state['OPENAI_API_KEY']:
