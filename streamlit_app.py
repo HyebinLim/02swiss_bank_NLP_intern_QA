@@ -108,7 +108,7 @@ if st.session_state['OPENAI_API_KEY']:
             import os
             os.environ["OPENAI_API_KEY"] = api_key
             
-            # PDF 파일 존재 확인
+            # PDF 파일 존재 확인 (원본 사용 - 텍스트 보존)
             pdf_path = "swiss_bank_job.pdf"
             if not os.path.exists(pdf_path):
                 st.error(f"PDF file not found: {pdf_path}")

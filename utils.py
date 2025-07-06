@@ -19,14 +19,23 @@ def get_doc_tools(
             documents = SimpleDirectoryReader(input_files=[file_path]).load_data()
         
         with st.spinner("Processing document chunks..."):
-            # Smaller chunk size for better performance
-            splitter = SentenceSplitter(chunk_size=512, chunk_overlap=50)
+            # Optimized chunk size for better performance and accuracy
+            splitter = SentenceSplitter(
+                chunk_size=1024,  # Larger chunks for better context
+                chunk_overlap=100,  # More overlap for better continuity
+                separator="\n"  # Use newlines as separators
+            )
             nodes = splitter.get_nodes_from_documents(documents)
             
+            # Filter out very short nodes (likely noise)
+            filtered_nodes = [node for node in nodes if len(node.text.strip()) > 50]
+            
             # Limit number of nodes for better performance
-            if len(nodes) > 1000:
-                nodes = nodes[:1000]
-                st.warning("Document was truncated to 1000 chunks for better performance.")
+            if len(filtered_nodes) > 800:
+                filtered_nodes = filtered_nodes[:800]
+                st.warning("Document was optimized to 800 chunks for better performance.")
+            
+            nodes = filtered_nodes
         
         with st.spinner("Creating vector index..."):
             vector_index = VectorStoreIndex(nodes)
@@ -54,11 +63,13 @@ def get_doc_tools(
             ]
             
             query_engine = vector_index.as_query_engine(
-                similarity_top_k=2,
+                similarity_top_k=3,  # More relevant results
                 filters=MetadataFilters.from_dicts(
                     metadata_dicts,
                     condition=FilterCondition.OR
-                )
+                ) if metadata_dicts else None,
+                response_mode="compact",  # More concise responses
+                streaming=False  # Disable streaming for better performance
             )
             response = query_engine.query(query)
             return response

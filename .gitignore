@@ -23,3 +23,10 @@ coverage.xml
 .mypy_cache
 .pytest_cache
 .hypothesis
+
+# Original PDF files (large files)
+swiss_bank_job.pdf
+*.pdf.bak
+
+# Compression scripts (one-time use)
+compress_pdf.py
