@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 # --- 앱 설명 표시 ---
-st.header("🏦Want a Swiss Bank AI/NLP job?")
+st.subheader("Want a Swiss Bank AI/NLP job?")
 st.markdown("""
 💬 Ask me anything about my journey to become an AI/NLP scientist at a Swiss bank in Zurich during my master's at University of Zurich.
 
