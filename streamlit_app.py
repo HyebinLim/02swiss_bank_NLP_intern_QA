@@ -27,11 +27,7 @@ st.markdown("""
 if 'OPENAI_API_KEY' not in st.session_state:
     st.session_state['OPENAI_API_KEY'] = ''
 
-# API 키 재설정 버튼
-if st.button("🔄 Reset API Key"):
-    st.session_state['OPENAI_API_KEY'] = ''
-    st.session_state['agent_loaded'] = False
-    st.rerun()
+# API 키 재설정 버튼은 Q&A 시스템 로드 후에 표시됩니다
 
 api_key = st.text_input(
     "🔑 Enter your OpenAI API key:",
@@ -130,6 +126,13 @@ if st.session_state['OPENAI_API_KEY']:
     # 에이전트 로딩 상태 확인
     if 'agent_loaded' not in st.session_state:
         st.session_state['agent_loaded'] = False
+
+    # API 키 재설정 시 캐시 클리어
+    if st.button("🔄 Reset API Key"):
+        st.session_state['OPENAI_API_KEY'] = ''
+        st.session_state['agent_loaded'] = False
+        load_tools_and_agent.clear()
+        st.rerun()
 
     if not st.session_state['agent_loaded']:
         with st.spinner("Loading Q&A system..."):
