@@ -237,7 +237,13 @@ if st.session_state['OPENAI_API_KEY']:
             pdf_path = "swiss_bank_job.pdf"
             if not os.path.exists(pdf_path):
                 st.error(f"PDF file not found: {pdf_path}")
+                st.info("Current working directory: " + os.getcwd())
+                st.info("Files in directory: " + str(os.listdir(".")))
                 return None
+                
+            # PDF 파일 크기 확인
+            file_size = os.path.getsize(pdf_path)
+            st.info(f"PDF file found: {pdf_path} (Size: {file_size} bytes)")
                 
             vector_tool, summary_tool = get_doc_tools(pdf_path, "swissbankjob")
             llm = OpenAI(model="gpt-3.5-turbo", temperature=0)
@@ -247,9 +253,12 @@ if st.session_state['OPENAI_API_KEY']:
                 verbose=False
             )
             agent = AgentRunner(agent_worker)
+            st.success("Agent created successfully!")
             return agent
         except Exception as e:
             st.error(f"Error loading tools and agent: {str(e)}")
+            import traceback
+            st.error(f"Full traceback: {traceback.format_exc()}")
             return None
 
     # 에이전트 로딩 상태 확인
@@ -259,6 +268,12 @@ if st.session_state['OPENAI_API_KEY']:
     # API 키 재설정 버튼 처리
     if reset_clicked:
         st.session_state['OPENAI_API_KEY'] = ''
+        st.session_state['agent_loaded'] = False
+        load_tools_and_agent.clear()
+        st.rerun()
+
+    # 강제 리로드 버튼 추가
+    if st.button("🔄 Force Reload System", key="force_reload"):
         st.session_state['agent_loaded'] = False
         load_tools_and_agent.clear()
         st.rerun()

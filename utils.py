@@ -16,7 +16,9 @@ def get_doc_tools(
     try:
         # load documents with progress indicator
         with st.spinner("Loading PDF document..."):
+            st.info(f"Attempting to load PDF: {file_path}")
             documents = SimpleDirectoryReader(input_files=[file_path]).load_data()
+            st.success(f"Successfully loaded {len(documents)} document(s)")
         
         with st.spinner("Processing document chunks..."):
             # Optimized chunk size for better performance and accuracy
@@ -26,9 +28,11 @@ def get_doc_tools(
                 separator="\n"  # Use newlines as separators
             )
             nodes = splitter.get_nodes_from_documents(documents)
+            st.info(f"Created {len(nodes)} initial nodes")
             
             # Filter out very short nodes (likely noise)
             filtered_nodes = [node for node in nodes if len(node.text.strip()) > 50]
+            st.info(f"After filtering: {len(filtered_nodes)} nodes")
             
             # Limit number of nodes for better performance
             if len(filtered_nodes) > 800:
@@ -39,6 +43,7 @@ def get_doc_tools(
         
         with st.spinner("Creating vector index..."):
             vector_index = VectorStoreIndex(nodes)
+            st.success("Vector index created successfully")
         
         def vector_query(
             query: str, 
@@ -94,9 +99,12 @@ def get_doc_tools(
                     "Do NOT use if you have specific questions."
                 ),
             )
+            st.success("Summary index created successfully")
 
         return vector_query_tool, summary_tool
         
     except Exception as e:
         st.error(f"Error processing document: {str(e)}")
+        import traceback
+        st.error(f"Full traceback: {traceback.format_exc()}")
         raise e
